@@ -14,58 +14,48 @@ function Question(question, answers, correctAnswer, image) {
 var q1 = new Question('Which of the following vegetables is not one of the ingredients of V-8 juice?', ['Beet', 'Carrot', 'Spinach', 'Cabbage'], 'Cabbage', '');
 var q2 = new Question('What country produces the most potatoes?', ['China', 'USA', 'Ireland', 'Russia'], 'China', '');
 var q3 = new Question('What soft-drink company introduced the brand Slice?', ['Dr. Pepper', 'Coca Cola', 'Seven Up', 'Pepsico'], 'Coca Cola', '');
-var q4 = new Question('Simplesse is the fat substitute of NutraSweet.  What is it made of?', ['a blend of proteins from egg white and milk ', 'fat molecules altered to be too large to digest', 'molecules that are the mirror-image of normal fat molecules'], 'a blend of proteins from egg white and milk ', '');
-var q5 = new Question('Which grade of olive oil is considered the best?', ['extra virgin', 'pure virgin', 'superfine virgin'], 'extra virgin', '');
+var q4 = new Question('Simplesse is the fat substitute of NutraSweet.  What is it made of?', ['a blend of proteins from egg white and milk ', 'fat molecules altered to be too large to digest', 'molecules that are the mirror-image of normal fat molecules', 'yummy stuff'], 'a blend of proteins from egg white and milk ', '');
+var q5 = new Question('Which grade of olive oil is considered the best?', ['extra virgin', 'pure virgin', 'superfine virgin', 'clean olive'], 'extra virgin', '');
 //array of all questions
 var gameQuestions = [q1, q2, q3, q4, q5];
 
-function clearView() {
-    $('#time-remaining').text('');
-    $('#question').text('');
-    $('#answers').html('');
-    $('#game-update').text('');
-    $('#correct-answer').text('');
-    $('#image').html('');
-    $('#results').html('');
-    $('#button-section').html('');
+function toggleStart() {
+    $('.start').show();
+    $('.qa').hide();
+    $('.ans').hide();
+    $('.end').hide();
 }
 
-function makeStartButton() {
-    var startButton = '<button class="btn btn-success" id="start-button">Start</button>';
-    var startInstructions = 'Click on the button to start the game. Remember you have only 15 seconds to answer each question!';
-    $('#button-section').html(startButton);
-    $('#game-update').text(startInstructions);
+function toggleQA() {
+    $('.start').hide();
+    $('.qa').show();
+    $('.ans').hide();
+    $('.end').hide();
 }
 
-function showQA(i) {
-    clearView();
-    var q = gameQuestions[i];
+function toggleAns() {
+    $('.start').hide();
+    $('.qa').hide();
+    $('.ans').show();
+    $('.end').hide();
+}
+
+function toggleEnd() {
+    $('.start').hide();
+    $('.qa').hide();
+    $('.ans').hide();
+    $('.end').show();
+}
+
+function showQA() {
+    var q = gameQuestions[gameIndex];
     $('#question').text(q.question);
-    $('#answers').html('<ul id="answers-list"></ul>');
-    for (var j = 0; j < q.answers.length; j++) {
-        var a = '<li>' + q.answers[j] + '</li>';
-        $('#answers-list').append(a);
+    for (var i = 0; i < q.answers.length; i++) {
+        $('#a' + i).text(q.answers[i]);
     }
 }
 
-function clickAns(i) {
-    $('#answers-list').on('click', 'li', function() {
-        clearInterval(questionInterval);
-        var clicked = $(this).text();
-        clearView();
-        if (clicked === gameQuestions[i].correctAnswer) {
-            $('#game-update').text('You are correct!');
-
-        } else {
-            $('#game-update').text("Wrong answer!");
-        }
-        $('#time-remaining').text('Time remaining: ' + totalTime);
-        $('#correct-answer').text('The correct answer is: ' + gameQuestions[i].correctAnswer);
-    });
-}
-
 function showResults() {
-    clearView();
     $('#results').append('Number of correctly answered: ' + numCorrect + '</br>');
     $('#results').append('Number of incorrectly answered: ' + numWrong + '</br>');
     if (numCorrect >= numWrong) {
@@ -89,19 +79,34 @@ function questionTimer() {
 }
 
 $(document).ready(function() {
-    makeStartButton();
     $('#start-button').on('click', function() {
-        var gameInterval = setInterval(function() {
-            showQA(gameIndex);
-            questionTimer();
-            clickAns(gameIndex);
-            gameIndex++;
-            if (gameIndex === gameQuestions.length) {
-                clearInterval(gameInterval);
-            }
-        }, 5000);
+        toggleQA();
+        questionTimer();
+        showQA();
     });
-    if (gameIndex === gameQuestions.length) {
-        showResults();
-    }
+    $('#answers-list').on('click', 'li', function() {
+        toggleAns();
+        clearInterval(questionInterval);
+        var clicked = $(this).text();
+        if (clicked === gameQuestions[gameIndex].correctAnswer) {
+            $('#ans-update').text('You are correct!');
+            numCorrect++;
+        } else {
+            $('#ans-update').text("Wrong answer!");
+            numWrong++;
+        }
+        $('#correct-answer').text('The correct answer is: ' + gameQuestions[gameIndex].correctAnswer);
+        gameIndex++;
+        if (gameIndex !== gameQuestions.length) {
+            setTimeout(function() {
+                toggleQA();
+                questionTimer();
+                showQA();
+            }, 3000);
+        } else {
+            toggleEnd();
+            gameIndex = 0;
+            showResults();
+        }
+    });
 });
