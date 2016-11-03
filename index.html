@@ -12,31 +12,31 @@
 
 <body>
     <div class="container">
-        <header class="header">
+        <header class="row header">
             <h1><span class="glyphicon glyphicon-cutlery"></span> Do You Know Food? <span class="glyphicon glyphicon-cutlery"></span></h1>
         </header>
         <hr>
-        <div class="row" id="dynamic">
-            <div id="time-remaining" class="qa"></div>
-            <div id="question" class="qa"></div>
-            <div id="answers" class="qa">
-                <ul id="answers-list">
-                    <li id="a0"></li>
-                    <li id='a1'></li>
-                    <li id="a2"></li>
-                    <li id="a3"></li>
-                </ul>
-            </div>
-            <div id="game-update">
-                <p id="start-update" class="start">Click on the button to start the game. Remember you have only 15 seconds to answer each question!</p>
-                <p id="ans-update" class="ans"></p>
-            </div>
-            <div id="correct-answer" class="ans"></div>
-            <div id="image" class="ans"></div>
-            <div id="results" class="end"></div>
-            <div id="button-section">
-                <button class="btn btn-success start" id="start-button">Start</button>
-            </div>
+        <div id="time-remaining" class="row qa"></div>
+        <div id="question" class="row qa"></div>
+        <div id="answers" class="row qa">
+            <ul id="answers-list">
+                <li id="a0"></li>
+                <li id='a1'></li>
+                <li id="a2"></li>
+                <li id="a3"></li>
+            </ul>
+        </div>
+        <div id="game-update" class="row">
+            <p id="start-update" class="start">Click on the button to start the game.</br>
+                Remember you have only 15 seconds to answer each question!</p>
+            <p id="ans-update" class="ans"></p>
+            <p id="end-update" class="end">Click on the start button to play again! </p>
+        </div>
+        <div id="correct-answer" class="ans row"></div>
+        <div id="image" class="ans row"></div>
+        <div id="results" class="end row"></div>
+        <div id="button-section">
+            <button class="btn btn-success start" id="start-button">Start</button>
         </div>
     </div>
 </body>
