@@ -18,8 +18,8 @@ function Question(question, answers, correctAnswer, image) {
 var q1 = new Question('Which of the following vegetables is not one of the ingredients of V-8 juice?', ['Beet', 'Carrot', 'Spinach', 'Cabbage'], 'Cabbage', '<img src="assets/images/cabbage.gif">');
 var q2 = new Question('What country produces the most potatoes?', ['China', 'USA', 'Ireland', 'Russia'], 'China', '<img src="assets/images/potato.gif">');
 var q3 = new Question('What soft-drink company introduced the brand Slice?', ['Dr. Pepper', 'Coca Cola', 'Seven Up', 'Pepsico'], 'Coca Cola', '<img src="assets/images/slice.gif">');
-var q4 = new Question('Simplesse is the fat substitute of NutraSweet.  What is it made of?', ['a blend of proteins from egg white and milk ', 'fat molecules altered to be too large to digest', 'molecules that are the mirror-image of normal fat molecules', 'yummy stuff'], 'a blend of proteins from egg white and milk ', '<img src="assets/images/nutrasweet.gif">');
-var q5 = new Question('Which grade of olive oil is considered the best?', ['extra virgin', 'pure virgin', 'superfine virgin', 'clean olive'], 'extra virgin', '<img src="assets/images/olive.gif">');
+var q4 = new Question('Simplesse is the fat substitute of NutraSweet.  What is it made of?', ['a blend of proteins from egg white and milk ', 'fat molecules altered to be too large to digest', 'molecules that are the mirror-image of normal fat molecules'], 'a blend of proteins from egg white and milk ', '<img src="assets/images/nutrasweet.gif">');
+var q5 = new Question('Which grade of olive oil is considered the best?', ['extra virgin', 'pure virgin', 'superfine virgin'], 'extra virgin', '<img src="assets/images/olive.gif">');
 
 //array of all questions
 var gameQuestions = [q1, q2, q3, q4, q5];
@@ -60,8 +60,10 @@ function toggleEnd() {
 function showQA() {
     var q = gameQuestions[gameIndex];
     $('#question').text(q.question);
-    for (var i = 0; i < q.answers.length; i++) {
-        $('#a' + i).text(q.answers[i]);
+    $('#answers').html('<ul id="answers-list"></ul>');
+    for (var j = 0; j < q.answers.length; j++) {
+        var a = '<li>' + q.answers[j] + '</li>';
+        $('#answers-list').append(a);
     }
 }
 
@@ -135,7 +137,7 @@ $(document).ready(function() {
         showQA();
     });
     $('#answers-list').css('cursor', 'pointer');
-    $('#answers-list').on('click', 'li', function() {
+    $(document).on('click', 'ul#answers-list > li', function() {
         toggleAns();
         clearInterval(questionInterval);
         var clicked = $(this).text();
