@@ -57,6 +57,7 @@ function toggleEnd() {
 }
 
 //shows a Question from the gameQuestions array depending on the gameIndex
+// adds answers dynamically
 function showQA() {
     var q = gameQuestions[gameIndex];
     $('#question').text(q.question);
