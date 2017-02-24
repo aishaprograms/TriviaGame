@@ -1,7 +1,7 @@
 # TriviaGame
 This is a Trivia Game using jQuery and timers.
 Both setTimeout and setInterval timers were used. 
-Question is an object prototype which holds a question, possible answers, the correct answer, and an image associated with the question.
+Question is an object constructor which holds a question, possible answers, the correct answer, and an image associated with the question.
 The Questions and its answers are added dynamically to the DOM.
 
 Heroku app: https://polar-waters-40325.herokuapp.com/
